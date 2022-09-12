@@ -1,6 +1,9 @@
-﻿using IncrementSequenceDemos.Models;
+﻿using System.Data;
+using IncrementSequenceDemos.Models;
+using Microsoft.Data.SqlClient;
 using SequenceLibrary;
 using static System.DateTime;
+
 
 namespace IncrementSequenceDemos.Classes;
 
@@ -106,5 +109,26 @@ public class Operations
         invoiceNumber = "AQW-23-10";
         Console.WriteLine(Helpers.NextValue(invoiceNumber, 10));
 
+    }
+
+    public static void DataExample()
+    {
+        var connectionString = 
+            "Server=(localdb)\\mssqllocaldb;Database=NextValueDatabase;integrated security=True;Encrypt=True";
+        int someValue = 0;
+        int maxValue = 2022;
+
+        using var cn = new SqlConnection(connectionString);
+        using var cmd = new SqlCommand() {Connection = cn};
+        cmd.CommandText = "INSERT INTO dbo.Example (Value) VALUES (@Value)";
+        cmd.Parameters.Add("@Value", SqlDbType.NVarChar);
+        cn.Open();
+
+        while (someValue < maxValue)
+        {
+            cmd.Parameters["@Value"].Value = $"{Helpers.NextValue($"{someValue:D3}")}/{maxValue}";
+            cmd.ExecuteNonQuery();
+            someValue++;
+        }
     }
 }

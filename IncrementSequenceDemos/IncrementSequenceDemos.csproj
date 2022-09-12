@@ -16,11 +16,13 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="ConsoleHelperLibrary" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0" />
 		<PackageReference Include="protobuf-net" Version="3.1.4" />
 		<PackageReference Include="Spectre.Console" Version="0.44.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="assets\" />
+	  <Folder Include="scripts\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\SequenceLibrary\SequenceLibrary.csproj" />
