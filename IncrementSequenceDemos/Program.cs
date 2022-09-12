@@ -10,7 +10,6 @@ namespace IncrementSequenceDemos
         static void Main(string[] args)
         {
             Operations.DataExample();
-            Console.WriteLine("done");
             //InvoiceExample();
             Console.ReadLine();
         }

@@ -111,6 +111,10 @@ public class Operations
 
     }
 
+    /// <summary>
+    /// This example is no different from the other samples other than data is place
+    /// into a SQL-Server database table, see the script under Solution Explorer script folder.
+    /// </summary>
     public static void DataExample()
     {
         var connectionString = 
