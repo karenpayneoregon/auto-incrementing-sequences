@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using IncrementSequenceDemos.Data;
 using IncrementSequenceDemos.Models;
 using Microsoft.Data.SqlClient;
 using SequenceLibrary;
@@ -111,11 +112,22 @@ public class Operations
 
     }
 
+    public static void TruncateExample1Table()
+    {
+        var connectionString = "Server=(localdb)\\mssqllocaldb;Database=NextValueDatabase;integrated security=True;Encrypt=True";
+        using var cn = new SqlConnection(connectionString);
+        using var cmd = new SqlCommand() { Connection = cn };
+
+        cmd.CommandText = "TRUNCATE TABLE dbo.Example1";
+        cn.Open();
+        cmd.ExecuteNonQuery();
+    }
+
     /// <summary>
     /// This example is no different from the other samples other than data is place
     /// into a SQL-Server database table, see the script under Solution Explorer script folder.
     /// </summary>
-    public static void DataExample()
+    public static void DataProviderExample()
     {
         var connectionString = "Server=(localdb)\\mssqllocaldb;Database=NextValueDatabase;integrated security=True;Encrypt=True";
         int someValue = 0;
@@ -136,6 +148,58 @@ public class Operations
             cmd.Parameters["@Value"].Value = $"A{Helpers.NextValue($"{someValue:D3}")}/{maxValue}";
             cmd.ExecuteNonQuery();
             someValue++;
+        }
+    }
+
+    public static void EntityFrameworkExample1()
+    {
+        TruncateExample1Table();
+
+        int someValue = 0;
+        int maxValue = 20;
+        using var context = new Context();
+
+        while (someValue < maxValue)
+        {
+            context.Add(new Example1() { InvoiceNumber = $"A{Helpers.NextInvoiceNumber($"{someValue:D3}")}/{maxValue}" });
+            someValue++;
+        }
+
+        context.SaveChanges();
+    }
+
+    public static bool EntityFrameworkExample2(int customerId)
+    {
+        using var context = new Context();
+        // Get customer to add a new order
+        var customer = context.CustomerSequence.FirstOrDefault(x => x.CustomerIdentifier == customerId);
+        if (customer is not null)
+        {
+            var prefix = customer.SequencePreFix;
+            var sequenceValue = customer.CurrentSequenceValue;
+
+            /*
+             * If this is the first order for a customer start the sequence, otherwise increment
+             * the sequence
+             */
+            sequenceValue = string.IsNullOrWhiteSpace(sequenceValue) ? 
+                $"{prefix}{Helpers.NextValue("0")}" : 
+                Helpers.NextValue(sequenceValue);
+
+            // update the sequence
+            customer.CurrentSequenceValue = sequenceValue;
+
+            // add a new order
+            Orders order = new() { CustomerIdentifier = customer.Id, InvoiceNumber = sequenceValue, OrderDate = DateTime.Now };
+
+            context.Orders.Add(order);
+            return context.SaveChanges() == 2;
+
+
+        }
+        else
+        {
+            return false;
         }
     }
 }

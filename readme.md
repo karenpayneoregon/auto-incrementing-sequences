@@ -24,10 +24,54 @@ By having unique segments like waiter’s identifier there is no chance of issues 
 
 The same would be true for other examples like a person calls in an order to a store, the person taking the order has a unique identifier.
 
+# EF Core
 
-# Soure code
+In this example the following tables are used
 
-Surprizingly the code is short but at the same time many developers would not come up with this which is the entire reason for this article.
+| Table        |   Description    |   Note |
+|:------------- |:-------------|:-------------|
+| Customers | Has customer details |  |
+| CustomerSequence | Has one record per customer to store thier sequence and a prefix to compose the final sequence | AA1 first sequence for first customer  |
+| :small_blue_diamond: | | I kept the prefix short but can be whatever you want|
+| Ordrers | Customer orders |  |
+
+
+```csharp
+public static bool EntityFrameworkExample2(int customerId)
+{
+    using var context = new Context();
+    // Get customer to add a new order
+    var customer = context.CustomerSequence.FirstOrDefault(x => x.CustomerIdentifier == customerId);
+    if (customer is not null)
+    {
+        var prefix = customer.SequencePreFix;
+        var sequenceValue = customer.CurrentSequenceValue;
+
+        /*
+            * If this is the first order for a customer start the sequence, otherwise increment
+            * the sequence
+            */
+        sequenceValue = string.IsNullOrWhiteSpace(sequenceValue) ? 
+            $"{prefix}{Helpers.NextValue("0")}" : 
+            Helpers.NextValue(sequenceValue);
+
+        // update the sequence
+        customer.CurrentSequenceValue = sequenceValue;
+
+        // add a new order
+        Orders order = new() { CustomerIdentifier = customer.Id, InvoiceNumber = sequenceValue, OrderDate = DateTime.Now };
+
+        context.Orders.Add(order);
+        return context.SaveChanges() == 2;
+
+
+    }
+    else
+    {
+        return false;
+    }
+}
+```
 
 ```csharp
 public class Helpers
