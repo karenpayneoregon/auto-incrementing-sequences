@@ -9,8 +9,8 @@ namespace IncrementSequenceDemos
     {
         static void Main(string[] args)
         {
-            Operations.DataExample();
-            //InvoiceExample();
+            //Operations.DataExample();
+            InvoiceExample();
             Console.ReadLine();
         }
 

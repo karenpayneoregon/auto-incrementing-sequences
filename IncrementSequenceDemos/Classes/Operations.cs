@@ -117,20 +117,23 @@ public class Operations
     /// </summary>
     public static void DataExample()
     {
-        var connectionString = 
-            "Server=(localdb)\\mssqllocaldb;Database=NextValueDatabase;integrated security=True;Encrypt=True";
+        var connectionString = "Server=(localdb)\\mssqllocaldb;Database=NextValueDatabase;integrated security=True;Encrypt=True";
         int someValue = 0;
         int maxValue = 2022;
 
         using var cn = new SqlConnection(connectionString);
         using var cmd = new SqlCommand() {Connection = cn};
+
+        cmd.CommandText = "TRUNCATE TABLE dbo.Example";
+        cn.Open();
+        cmd.ExecuteNonQuery();
+
         cmd.CommandText = "INSERT INTO dbo.Example (Value) VALUES (@Value)";
         cmd.Parameters.Add("@Value", SqlDbType.NVarChar);
-        cn.Open();
 
         while (someValue < maxValue)
         {
-            cmd.Parameters["@Value"].Value = $"{Helpers.NextValue($"{someValue:D3}")}/{maxValue}";
+            cmd.Parameters["@Value"].Value = $"A{Helpers.NextValue($"{someValue:D3}")}/{maxValue}";
             cmd.ExecuteNonQuery();
             someValue++;
         }
