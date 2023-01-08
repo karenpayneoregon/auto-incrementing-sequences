@@ -73,6 +73,8 @@ public static bool EntityFrameworkExample2(int customerId)
 }
 ```
 
+# Method for incrementing
+
 ```csharp
 public class Helpers
 {
