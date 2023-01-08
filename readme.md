@@ -176,6 +176,7 @@ public static void Init()
 
 The following example is a start for incrementing a sequence in table via computed column.
 
+
 ```sql
 SET ANSI_NULLS ON;
 GO
@@ -199,6 +200,9 @@ CREATE TABLE dbo.SampleComputed
 ) ON [PRIMARY];
 GO
 ```
+
+For more on computed columns see the following [repository](https://github.com/karenpayneoregon/sql-server-computed-columns).
+
 
 # Summary
 
