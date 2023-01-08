@@ -1,8 +1,42 @@
 # Auto-Incrementing Sequences
 
-In this article, learn how to deal with orders and invoices there, needs to be a method to track them, which may be an alphanumeric value.
+Transaction numbers and invoice numbers that are alpha numeric are commonly used and in this code sample/article a method to produce alpha numeric is shown along with using a computed column.
 
-I originally used the [following](https://github.com/karenpayneoregon/Increment-AlphaNumeric-Value/blob/master/UtilityLibrary/StringHelpers.cs#L12:L58) which would be overkill for most simple projects yet is viable for larger solutions.
+Code to produce alpha numeric can be used in any type of project while the computed column is specific to SQL-Server.
+
+# Method for incrementing
+
+This method accepts a string like `AQW-23-10` and return `AQW-23-11` which incremented the last series of numbers
+
+```csharp
+public class Helpers
+{
+    /// <summary>
+    /// Given a string which ends with a number, increment the number by 1
+    /// </summary>
+    /// <param name="sender">string ending with a number</param>
+    /// <returns>string with ending number incremented by 1</returns>
+    public static string NextValue(string sender)
+    {
+        string value = Regex.Match(sender, "[0-9]+$").Value;
+        return sender[..^value.Length] + (long.Parse(value) + 1)
+            .ToString().PadLeft(value.Length, '0');
+    }
+}
+```
+
+The following overload accepts an int value to increment by rather than increment by 1 as in the above method.
+
+```csharp
+public static string NextValue(string sender, int incrementBy)
+{
+    string value = Regex.Match(sender, "[0-9]+$").Value;
+    return sender[..^value.Length] + (long.Parse(value) + incrementBy)
+        .ToString().PadLeft(value.Length, '0');
+}
+```
+
+# Example
 
 Real life examples, taking an order at a restaurant where the order number consist of the waiter’s identifier, transaction date/time, a transaction number and an incrementing value.
 
@@ -35,6 +69,8 @@ In this example the following tables are used
 | :small_blue_diamond: | | I kept the prefix short but can be whatever you want|
 | Ordrers | Customer orders |  |
 
+
+Here `SequencePreFix` is a unique string value to represent a specific customer and `CurrentSequenceValue` is the sequence, combine both together to produce an, in this case a invoice number for an order.
 
 ```csharp
 public static bool EntityFrameworkExample2(int customerId)
@@ -73,35 +109,8 @@ public static bool EntityFrameworkExample2(int customerId)
 }
 ```
 
-# Method for incrementing
 
-```csharp
-public class Helpers
-{
-    /// <summary>
-    /// Given a string which ends with a number, increment the number by 1
-    /// </summary>
-    /// <param name="sender">string ending with a number</param>
-    /// <returns>string with ending number incremented by 1</returns>
-    public static string NextValue(string sender)
-    {
-        string value = Regex.Match(sender, "[0-9]+$").Value;
-        return sender[..^value.Length] + (long.Parse(value) + 1)
-            .ToString().PadLeft(value.Length, '0');
-    }
-}
-```
-
-</br>
-
-If the code may be used in multiple applications that need distinctful names we can write a wrapper on the method above thus in turn could reside in a team library.
-
-
-```csharp
-public static string NextInvoiceNumber(string sender, int incrementBy) => NextValue(sender, incrementBy);
-```
-
-# Example code
+# Example code to binary file
 
 ![a](assets/screenshot1.png)
 
@@ -172,7 +181,7 @@ public static void Init()
 }
 ```
 
-# Increment with computed column
+# Increment with a SQL-Server computed column
 
 The following example is a start for incrementing a sequence in table via computed column.
 
