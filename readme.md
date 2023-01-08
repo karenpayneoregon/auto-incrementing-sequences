@@ -212,6 +212,10 @@ GO
 
 For more on computed columns see the following [repository](https://github.com/karenpayneoregon/sql-server-computed-columns).
 
+# Note
+
+What has been presented has been intentionally kept'd basic so that the reader can use as is or modify to suit their specific needs.
+
 
 # Summary
 
