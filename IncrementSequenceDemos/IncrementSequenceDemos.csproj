@@ -20,6 +20,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
 		<PackageReference Include="protobuf-net" Version="3.1.4" />
 		<PackageReference Include="Spectre.Console" Version="0.44.0" />
+		<PackageReference Include="ConfigurationLibrary" Version="1.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="assets\" />
@@ -28,5 +29,10 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\SequenceLibrary\SequenceLibrary.csproj" />
 	  <ProjectReference Include="..\UtilitiesLibrary\UtilitiesLibrary.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>

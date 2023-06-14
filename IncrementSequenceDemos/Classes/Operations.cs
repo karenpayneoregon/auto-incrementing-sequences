@@ -4,7 +4,7 @@ using IncrementSequenceDemos.Models;
 using Microsoft.Data.SqlClient;
 using SequenceLibrary;
 using static System.DateTime;
-
+using static ConfigurationLibrary.Classes.ConfigurationHelper;
 
 namespace IncrementSequenceDemos.Classes;
 
@@ -129,11 +129,10 @@ public class Operations
     /// </summary>
     public static void DataProviderExample()
     {
-        var connectionString = "Server=(localdb)\\mssqllocaldb;Database=NextValueDatabase;integrated security=True;Encrypt=True";
         int someValue = 0;
         int maxValue = 2022;
 
-        using var cn = new SqlConnection(connectionString);
+        using var cn = new SqlConnection(ConnectionString());
         using var cmd = new SqlCommand() {Connection = cn};
 
         cmd.CommandText = "TRUNCATE TABLE dbo.Example";
