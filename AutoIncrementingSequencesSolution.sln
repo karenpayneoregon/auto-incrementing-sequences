@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Experiments", "Experiments", "{4A06CD74-7830-4399-93D8-25B324990A2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KP_ConsoleAppNet71", "KP_ConsoleAppNet71\KP_ConsoleAppNet71.csproj", "{1ADA7FD2-D3A2-491F-A1D2-C8489A956831}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,9 +36,16 @@ Global
 		{A591EA03-631C-4F09-87F4-81DA8AC3340A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A591EA03-631C-4F09-87F4-81DA8AC3340A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A591EA03-631C-4F09-87F4-81DA8AC3340A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ADA7FD2-D3A2-491F-A1D2-C8489A956831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ADA7FD2-D3A2-491F-A1D2-C8489A956831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ADA7FD2-D3A2-491F-A1D2-C8489A956831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ADA7FD2-D3A2-491F-A1D2-C8489A956831}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1ADA7FD2-D3A2-491F-A1D2-C8489A956831} = {4A06CD74-7830-4399-93D8-25B324990A2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CA6743A-AA5C-4BA3-B5C1-A46F17C60D7C}

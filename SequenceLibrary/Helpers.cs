@@ -34,7 +34,7 @@ public class Helpers
     }
 
     /// <summary>
-    /// Wrapper for NextValue as some may lik this name
+    /// Wrapper for NextValue as some may like this name
     /// </summary>
     public static string NextInvoiceNumber(string sender, int incrementBy) => NextValue(sender, incrementBy);
 
