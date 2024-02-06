@@ -1,6 +1,6 @@
 ﻿namespace SequenceLibrary;
 
-public class Helpers
+public static class Helpers
 {
     /// <summary>
     /// Given a string which ends with a number, increment the number by 1
@@ -18,6 +18,7 @@ public class Helpers
     /// Wrapper for NextValue as some may like this name
     /// </summary>
     public static string NextInvoiceNumber(string sender) => NextValue(sender);
+    public static string NextCustomerInvoiceNumber(this string sender) => NextValue(sender);
 
 
     /// <summary>
