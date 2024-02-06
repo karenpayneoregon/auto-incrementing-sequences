@@ -10,6 +10,8 @@ For the purist reading this, you know how to do this so handle it and for those 
 
 ![Screenshot](assets/screenshot.png)
 
+![Results](assets/results.png)
+
 ## Why Windows Forms?
 
 Simple because its easier to standup than other project types.
