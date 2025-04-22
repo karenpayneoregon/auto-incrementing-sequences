@@ -25,7 +25,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="assets\" />
-	  <Folder Include="scripts\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\SequenceLibrary\SequenceLibrary.csproj" />
