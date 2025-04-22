@@ -3,25 +3,25 @@
 using System;
 using System.Collections.Generic;
 
-namespace IncrementSequenceDemos.Models;
-
-public partial class Customers
+namespace IncrementSequenceDemos.Models
 {
-    public int CustomerIdentifier { get; set; }
+    public partial class Customers
+    {
+        public Customers()
+        {
+            CustomerSequence = new HashSet<CustomerSequence>();
+            Orders = new HashSet<Orders>();
+        }
 
-    public string CompanyName { get; set; }
+        public int CustomerIdentifier { get; set; }
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public string ContactTitle { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string Country { get; set; }
 
-    public string ContactName { get; set; }
-
-    public string ContactTitle { get; set; }
-
-    public string City { get; set; }
-
-    public string PostalCode { get; set; }
-
-    public string Country { get; set; }
-
-    public virtual ICollection<CustomerSequence> CustomerSequence { get; } = new List<CustomerSequence>();
-
-    public virtual ICollection<Orders> Orders { get; } = new List<Orders>();
+        public virtual ICollection<CustomerSequence> CustomerSequence { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
+    }
 }

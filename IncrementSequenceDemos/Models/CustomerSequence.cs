@@ -3,17 +3,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace IncrementSequenceDemos.Models;
-
-public partial class CustomerSequence
+namespace IncrementSequenceDemos.Models
 {
-    public int Id { get; set; }
+    public partial class CustomerSequence
+    {
+        public int Id { get; set; }
+        public int? CustomerIdentifier { get; set; }
+        public string CurrentSequenceValue { get; set; }
+        public string SequencePreFix { get; set; }
+        public string Sequence { get; set; }
 
-    public int? CustomerIdentifier { get; set; }
-
-    public string CurrentSequenceValue { get; set; }
-
-    public string SequencePreFix { get; set; }
-
-    public virtual Customers CustomerIdentifierNavigation { get; set; }
+        public virtual Customers CustomerIdentifierNavigation { get; set; }
+    }
 }

@@ -3,11 +3,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace IncrementSequenceDemos.Models;
-
-public partial class Example1
+namespace IncrementSequenceDemos.Models
 {
-    public int Id { get; set; }
-
-    public string InvoiceNumber { get; set; }
+    public partial class Example1
+    {
+        public int Id { get; set; }
+        public string InvoiceNumber { get; set; }
+    }
 }

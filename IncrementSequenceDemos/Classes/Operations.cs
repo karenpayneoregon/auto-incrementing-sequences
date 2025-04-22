@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Dapper;
 using IncrementSequenceDemos.Data;
 using IncrementSequenceDemos.Models;
 using Microsoft.Data.SqlClient;
@@ -149,6 +150,29 @@ public class Operations
             someValue++;
         }
     }
+
+    public static void DataProviderExample1()
+    {
+        int someValue = 0;
+        int maxValue = 2022;
+
+        using var cn = new SqlConnection(ConnectionString());
+        cn.Open();
+
+        // Truncate the table first
+        cn.Execute("TRUNCATE TABLE dbo.Example");
+
+        // Prepare the insert SQL
+        const string insertSql = "INSERT INTO dbo.Example (Value) VALUES (@Value)";
+
+        while (someValue < maxValue)
+        {
+            var value = $"A{Helpers.NextValue($"{someValue:D3}")}/{maxValue}";
+            cn.Execute(insertSql, new { Value = value });
+            someValue++;
+        }
+    }
+
 
     public static void EntityFrameworkExample1()
     {
