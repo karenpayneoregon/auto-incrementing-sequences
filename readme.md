@@ -1,10 +1,23 @@
 # Auto-Incrementing Sequences
+<!--TOC-->
+  - [Method for incrementing](#method-for-incrementing)
+    - [Example](#example)
+  - [EF Core](#ef-core)
+  - [Example code to binary file](#example-code-to-binary-file)
+  - [Increment with a SQL-Server computed column](#increment-with-a-sql-server-computed-column)
+  - [Note](#note)
+- [Summary](#summary)
+<!--/TOC-->
 
 Transaction numbers and invoice numbers that are alpha numeric are commonly used and in this code sample/article a method to produce alpha numeric is shown along with using a computed column.
 
 Code to produce alpha numeric can be used in any type of project while the computed column is specific to SQL-Server.
 
-# Method for incrementing
+
+> **Note**
+> 04/2025 modifications were done in various projects.
+
+## Method for incrementing
 
 This method accepts a string like `AQW-23-10` and return `AQW-23-11` which incremented the last series of numbers
 
@@ -36,7 +49,7 @@ public static string NextValue(string sender, int incrementBy)
 }
 ```
 
-# Example
+### Example
 
 Real life examples, taking an order at a restaurant where the order number consist of the waiter’s identifier, transaction date/time, a transaction number and an incrementing value.
 
@@ -58,7 +71,7 @@ By having unique segments like waiter’s identifier there is no chance of issues 
 
 The same would be true for other examples like a person calls in an order to a store, the person taking the order has a unique identifier.
 
-# EF Core
+## EF Core
 
 In this example the following tables are used
 
@@ -110,7 +123,7 @@ public static bool EntityFrameworkExample2(int customerId)
 ```
 
 
-# Example code to binary file
+## Example code to binary file
 
 ![a](assets/screenshot1.png)
 
@@ -181,7 +194,7 @@ public static void Init()
 }
 ```
 
-# Increment with a SQL-Server computed column
+## Increment with a SQL-Server computed column
 
 The following example is a start for incrementing a sequence in table via computed column.
 
@@ -212,7 +225,7 @@ GO
 
 For more on computed columns see the following [repository](https://github.com/karenpayneoregon/sql-server-computed-columns).
 
-# Note
+## Note
 
 What has been presented has been intentionally kept'd basic so that the reader can use as is or modify to suit their specific needs.
 
