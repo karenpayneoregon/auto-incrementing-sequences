@@ -1,6 +1,6 @@
 ﻿namespace SequenceLibrary;
 
-public static class Helpers
+public static partial class Helpers
 {
     /// <summary>
     /// Given a string which ends with a number, increment the number by 1
@@ -9,7 +9,7 @@ public static class Helpers
     /// <returns>string with ending number incremented by 1</returns>
     public static string NextValue(string sender)
     {
-        string value = Regex.Match(sender, "[0-9]+$").Value;
+        var value = NumericSuffixRegEx().Match(sender).Value;
         return sender[..^value.Length] + (long.Parse(value) + 1)
             .ToString().PadLeft(value.Length, '0');
     }
@@ -70,4 +70,7 @@ public static class Helpers
     }
 
     public static char[] Characters => "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+
+    [GeneratedRegex("[0-9]+$")]
+    private static partial Regex NumericSuffixRegEx();
 }

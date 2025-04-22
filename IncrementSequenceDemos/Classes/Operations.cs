@@ -35,9 +35,14 @@ public class Operations
     }
 
     /// <summary>
-    /// Used for updating/saving in <seealso cref="Save"/>
+    /// Serializes a list of invoices into an encrypted file.
     /// </summary>
-    /// <param name="list"></param>
+    /// <param name="list">The list of <see cref="Invoice"/> objects to serialize.</param>
+    /// <remarks>
+    /// The serialized data is encrypted using a cryptographic key defined in the <see cref="Secrets"/> class.
+    /// The file is saved to the location specified by <see cref="FileName"/>.
+    /// </remarks>
+    /// <seealso cref="Save"/>
     public static void SerializeInvoices(List<Invoice> list)
     {
         CryptoSerializer<Invoice> cryptoSerializer = new(Secrets.Key);
@@ -60,18 +65,18 @@ public class Operations
     /// <summary>
     /// For initial creation of the file
     /// </summary>
-    public static List<Invoice> Invoices => new()
-    {
+    public static List<Invoice> Invoices =>
+    [
         new() { Id = 1, Number = "F1124" },
-        new() { Id = 2, Number = "1278-120"},
-        new() { Id = 3, Number = "3999/IKL/VII/21"},
-        new() { Id = 4, Number = "0001"},
-        new() { Id = 5, Number = "AA0001"},
-        new() { Id = 6, Number = "BB0200"},
-        new() { Id = 7, Number = $"BB-{Now.Year}-{Now.Month:D2}-0200"},
+        new() { Id = 2, Number = "1278-120" },
+        new() { Id = 3, Number = "3999/IKL/VII/21" },
+        new() { Id = 4, Number = "0001" },
+        new() { Id = 5, Number = "AA0001" },
+        new() { Id = 6, Number = "BB0200" },
+        new() { Id = 7, Number = $"BB-{Now.Year}-{Now.Month:D2}-0200" },
         // id, register number, transaction date/time, transaction number
-        new() { Id = 8, Number = $"KP,22,{Now:MM/dd/yyyy hh:mm},01"},
-    };
+        new() { Id = 8, Number = $"KP,22,{Now:MM/dd/yyyy hh:mm},01" }
+    ];
 
     /// <summary>
     /// Save changes back to <seealso cref="FileName"/>
@@ -113,10 +118,17 @@ public class Operations
 
     }
 
+    /// <summary>
+    /// Truncates all data from the <c>dbo.Example1</c> table in the database.
+    /// </summary>
+    /// <remarks>
+    /// This method uses a SQL command to remove all rows from the <c>dbo.Example1</c> table.
+    /// It requires a valid database connection string, which is retrieved using the <see cref="ConnectionString"/> method.
+    /// </remarks>
     public static void TruncateExample1Table()
     {
-        var connectionString = "Server=(localdb)\\mssqllocaldb;Database=NextValueDatabase;integrated security=True;Encrypt=True";
-        using var cn = new SqlConnection(connectionString);
+        //var connectionString = "Server=(localdb)\\mssqllocaldb;Database=NextValueDatabase;integrated security=True;Encrypt=True";
+        using var cn = new SqlConnection(ConnectionString());
         using var cmd = new SqlCommand() { Connection = cn };
 
         cmd.CommandText = "TRUNCATE TABLE dbo.Example1";
@@ -151,7 +163,17 @@ public class Operations
         }
     }
 
-    public static void DataProviderExample1()
+    /// <summary>
+    /// Demonstrates the use of Dapper to insert incremented values into a database table.
+    /// </summary>
+    /// <remarks>
+    /// This method truncates the `dbo.Example` table and then inserts incremented values
+    /// into it using a loop. The values are generated using the <see cref="SequenceLibrary.Helpers.NextValue(string)"/> method.
+    /// </remarks>
+    /// <exception cref="SqlException">
+    /// Thrown if there is an issue connecting to the database or executing the SQL commands.
+    /// </exception>
+    public static void DapperDataProviderExample()
     {
         int someValue = 0;
         int maxValue = 2022;
@@ -162,7 +184,6 @@ public class Operations
         // Truncate the table first
         cn.Execute("TRUNCATE TABLE dbo.Example");
 
-        // Prepare the insert SQL
         const string insertSql = "INSERT INTO dbo.Example (Value) VALUES (@Value)";
 
         while (someValue < maxValue)
@@ -174,6 +195,15 @@ public class Operations
     }
 
 
+    /// <summary>
+    /// Demonstrates the use of Entity Framework to populate the <see cref="Context.Example1"/> table
+    /// with sequentially generated invoice numbers.
+    /// </summary>
+    /// <remarks>
+    /// This method truncates the <c>Example1</c> table before inserting new records. 
+    /// It generates a sequence of invoice numbers using <see cref="Helpers.NextInvoiceNumber(string)"/> 
+    /// and saves the changes to the database.
+    /// </remarks>
     public static void EntityFrameworkExample1()
     {
         TruncateExample1Table();
@@ -191,6 +221,16 @@ public class Operations
         context.SaveChanges();
     }
 
+    /// <summary>
+    /// Creates a new order for a customer by generating or incrementing the sequence value
+    /// associated with the customer. Updates the customer's current sequence value and
+    /// saves the new order to the database.
+    /// </summary>
+    /// <param name="customerId">The unique identifier of the customer for whom the order is created.</param>
+    /// <returns>
+    /// <c>true</c> if the operation successfully updates the customer's sequence and adds the order to the database; 
+    /// otherwise, <c>false</c> if the customer does not exist.
+    /// </returns>
     public static bool EntityFrameworkExample2(int customerId)
     {
         using var context = new Context();

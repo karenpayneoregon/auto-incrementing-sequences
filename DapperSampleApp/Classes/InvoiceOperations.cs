@@ -12,9 +12,16 @@ internal class InvoiceOperations
     private IDbConnection _cn = new SqlConnection(ConnectionString());
 
     /// <summary>
-    /// Set next value for sequence
+    /// Updates the sequence value for the specified customer.
     /// </summary>
-    /// <param name="customers">Valid <see cref="Customers"/></param>
+    /// <param name="customers">An instance of <see cref="Customers"/> representing the customer whose sequence value is to be updated.</param>
+    /// <returns>
+    /// A tuple containing a boolean indicating success and an <see cref="Exception"/> if an error occurs.
+    /// </returns>
+    /// <remarks>
+    /// This method updates the customer's sequence value in the database. If the current sequence value is null, 
+    /// it initializes it with a default value before incrementing.
+    /// </remarks>
     public (bool success, Exception exception) SetSequence(Customers customers)
     {
         var sequenceValue = "";
@@ -57,9 +64,16 @@ internal class InvoiceOperations
     }
 
     /// <summary>
-    /// Get all <see cref="Customers"/>
+    /// Retrieves a list of all customers along with their sequence information.
     /// </summary>
-    /// <returns>Return all <see cref="Customers"/></returns>
+    /// <returns>
+    /// A list of <see cref="Customers"/> objects, each containing customer details 
+    /// and associated sequence information.
+    /// </returns>
+    /// <remarks>
+    /// This method executes a SQL query to fetch customer data and their corresponding 
+    /// sequence details by joining the Customers and CustomerSequence tables.
+    /// </remarks>
     public List<Customers> CustomersList()
     {
         const string statement =
@@ -78,10 +92,17 @@ internal class InvoiceOperations
     }
 
     /// <summary>
-    /// Get sequence for a specific customer
+    /// Retrieves the sequence information for a specific customer based on their identifier.
     /// </summary>
-    /// <param name="id">Customer primary key</param>
-    /// <returns></returns>
+    /// <param name="id">The unique identifier of the customer.</param>
+    /// <returns>
+    /// An instance of <see cref="CustomerSequence"/> containing the sequence details for the specified customer,
+    /// or <c>null</c> if no matching record is found.
+    /// </returns>
+    /// <remarks>
+    /// This method executes a SQL query to fetch the sequence information for a customer
+    /// from the <c>CustomerSequence</c> table in the database.
+    /// </remarks>
     public CustomerSequence? Get(int id)
     {
         const string statement =
