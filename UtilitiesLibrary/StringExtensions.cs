@@ -1,14 +1,15 @@
 ﻿namespace UtilitiesLibrary;
 
-public static class StringExtensions
+public static partial class StringExtensions
 {
+    // Compiled at build-time for performance, avoids reparsing the regex every call
+    [GeneratedRegex(@"([A-Z][a-z]+)")]
+    private static partial Regex CamelCasePattern();
 
     /// <summary>
-    /// Use to split on upper-cased characters and separate with a single space.
+    /// Splits a camel-cased string on upper-cased characters and separates with a single space.
     /// </summary>
     public static string SplitCamelCase(this string sender) =>
-        string.Join(" ", Regex.Matches(sender, @"([A-Z][a-z]+)")
+        string.Join(" ", CamelCasePattern().Matches(sender)
             .Select(m => m.Value));
-
-
 }
