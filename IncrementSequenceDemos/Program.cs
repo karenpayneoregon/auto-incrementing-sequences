@@ -9,7 +9,8 @@ namespace IncrementSequenceDemos
     {
         static void Main(string[] args)
         {
-            Operations.DapperDataProviderExample();
+            //Operations.DapperDataProviderExample();
+            
             //Operations.EntityFrameworkExample1();
             //var success = Operations.EntityFrameworkExample2(3);
             //if (success)

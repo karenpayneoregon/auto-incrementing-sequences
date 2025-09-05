@@ -29,7 +29,7 @@ public static partial class Helpers
     /// <returns>string with ending number incremented by <seealso cref="incrementBy"/></returns>
     public static string NextValue(string sender, int incrementBy)
     {
-        string value = Regex.Match(sender, "[0-9]+$").Value;
+        string value = EndingNumberRegex().Match(sender).Value;
         return sender[..^value.Length] + (long.Parse(value) + incrementBy)
             .ToString().PadLeft(value.Length, '0');
     }
@@ -40,7 +40,7 @@ public static partial class Helpers
     public static string NextInvoiceNumber(string sender, int incrementBy) => NextValue(sender, incrementBy);
 
     /// <summary>
-    /// Simple way to create auto incrementing alpha numeric string
+    /// Simple way to create auto incrementing alphanumeric string
     /// </summary>
     /// <param name="letter">Prefix</param>
     /// <param name="identifier">value to use</param>
@@ -73,4 +73,6 @@ public static partial class Helpers
 
     [GeneratedRegex("[0-9]+$")]
     private static partial Regex NumericSuffixRegEx();
+    [GeneratedRegex("[0-9]+$")]
+    private static partial Regex EndingNumberRegex();
 }

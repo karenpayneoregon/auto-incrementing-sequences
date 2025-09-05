@@ -1,5 +1,7 @@
-# Auto-Incrementing Sequences
+﻿# Auto-Incrementing Sequences
+
 <!--TOC-->
+  - [Table definitions](#table-definitions)
   - [Method for incrementing](#method-for-incrementing)
     - [Example](#example)
   - [EF Core](#ef-core)
@@ -8,10 +10,20 @@
   - [Note](#note)
 - [Summary](#summary)
 <!--/TOC-->
-
 Transaction numbers and invoice numbers that are alpha numeric are commonly used and in this code sample/article a method to produce alpha numeric is shown along with using a computed column.
 
 Code to produce alpha numeric can be used in any type of project while the computed column is specific to SQL-Server.
+
+🛑 There are no checks for concurrency violations as the code assumes that each customer has one sales representative; otherwise, a concurrency violation would be required.
+
+
+## Table definitions
+
+- The first table is a simple customer table.
+- The second table is to hold the current sequence for a customer along with a prefix to use when composing the final sequence using a computed column.
+
+
+![Screenshot2](assets/screenshot2.png)
 
 
 > **Note**
@@ -51,7 +63,7 @@ public static string NextValue(string sender, int incrementBy)
 
 ### Example
 
-Real life examples, taking an order at a restaurant where the order number consist of the waiter�s identifier, transaction date/time, a transaction number and an incrementing value.
+Real life examples, taking an order at a restaurant where the order number consist of the waiter’s identifier, transaction date/time, a transaction number and an incrementing value.
 
 Perhaps the model might be
 
@@ -67,7 +79,7 @@ public class Transaction
 }
 ```
 
-By having unique segments like waiter�s identifier there is no chance of issues in the backend database.
+By having unique segments like waiter’s identifier there is no chance of issues in the backend database.
 
 The same would be true for other examples like a person calls in an order to a store, the person taking the order has a unique identifier.
 
