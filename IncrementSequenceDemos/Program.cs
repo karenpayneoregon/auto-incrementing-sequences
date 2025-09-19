@@ -10,17 +10,17 @@ namespace IncrementSequenceDemos
         static void Main(string[] args)
         {
             //Operations.DapperDataProviderExample();
-            
+
             //Operations.EntityFrameworkExample1();
-            //var success = Operations.EntityFrameworkExample2(3);
-            //if (success)
-            //{
-            //    AnsiConsole.MarkupLine("[cyan]Order added[/]");
-            //}
-            //else
-            //{
-            //    AnsiConsole.MarkupLine("[cyan]Order not added[/]");
-            //}
+            var success = Operations.EntityFrameworkExample2(3);
+            if (success)
+            {
+                AnsiConsole.MarkupLine("[cyan]Order added[/]");
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[cyan]Order not added[/]");
+            }
 
             //InvoiceExample();
             AnsiConsole.MarkupLine("[white on blue]Done[/]");

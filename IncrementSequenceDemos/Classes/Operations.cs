@@ -242,12 +242,9 @@ public class Operations
             var sequenceValue = customer.CurrentSequenceValue;
 
             /*
-             * If this is the first order for a customer start the sequence, otherwise increment
-             * the sequence
+             * If this is the first order for a customer start the sequence, otherwise increment the sequence
              */
-            sequenceValue = string.IsNullOrWhiteSpace(sequenceValue) ? 
-                $"{prefix}{Helpers.NextValue("0")}" : 
-                Helpers.NextValue(sequenceValue);
+            sequenceValue = string.IsNullOrWhiteSpace(sequenceValue) ? $"{prefix}{Helpers.NextValue("0")}" : Helpers.NextValue(sequenceValue);
 
             // update the sequence
             customer.CurrentSequenceValue = sequenceValue;
@@ -257,8 +254,7 @@ public class Operations
 
             context.Orders.Add(order);
             return context.SaveChanges() == 2;
-
-
+            
         }
         else
         {
