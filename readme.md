@@ -1,6 +1,6 @@
 ﻿# Auto-Incrementing Sequences
-
 <!--TOC-->
+  - [Article](#article)
   - [Table definitions](#table-definitions)
   - [Method for incrementing](#method-for-incrementing)
     - [Example](#example)
@@ -16,6 +16,9 @@ Code to produce alpha numeric can be used in any type of project while the compu
 
 🛑 There are no checks for concurrency violations as the code assumes that each customer has one sales representative; otherwise, a concurrency violation would be required.
 
+## Article
+
+[Auto-Incrementing Sequences](https://dev.to/karenpayneoregon/auto-incrementing-sequences-319k)
 
 ## Table definitions
 
@@ -246,7 +249,7 @@ What has been presented has been intentionally kept'd basic so that the reader c
 
 Using `NextValue` method with a properly thought out schema for data storage provide you with auto-incrementing alpha numeric values.
 
-If there is a need for performing this with more assertions check out my Microsoft TechNet article [Auto-incrementing alphanumeric invoice number](https://social.technet.microsoft.com/wiki/contents/articles/53956.c-auto-incrementing-alphanumeric-invoice-number.aspx) with source code working with Entity Framework Core,
+If there is a need for performing this with more assertions check out my article [Auto-incrementing alphanumeric invoice number](https://dev.to/karenpayneoregon/auto-incrementing-sequences-319k) with source code working with Entity Framework Core,
 
 
 [^1]: protobuf-net is a contract based serializer for .NET code, that happens to write data in the "protocol buffers" serialization format engineered by Google. The API, however, is very different to Google's, and follows typical .NET patterns (it is broadly comparable, in usage, to XmlSerializer, DataContractSerializer, etc). It should work for most .NET languages that write standard types and can use attributes.
