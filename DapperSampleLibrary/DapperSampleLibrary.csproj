@@ -15,4 +15,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\SequenceLibrary\SequenceLibrary.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Scripts\" />
+	</ItemGroup>
 </Project>
