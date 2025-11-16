@@ -54,13 +54,137 @@ internal class InvoiceOperations
                 CurrentSequenceValue = sequenceValue,
                 CustomerIdentifier = customers.CustomerIdentifier
             });
+            
             transScope.Complete();
+            
+            return (true, null)!;
+            
+        }
+        catch (TransactionAbortedException ex)
+        {
+            return (false, ex);
+        }
+    }
+    
+    public Customers? GetSCustomers(int id)
+    {
+        const string statement = 
+            """
+            SELECT Id, CustomerIdentifier, CurrentSequenceValue, SequencePreFix
+            FROM dbo.CustomerSequence
+            WHERE Id = @Id
+            """;
+
+        return _cn.Query<Customers>(statement, new { Id = id }).SingleOrDefault();
+    }
+
+    /// <summary>
+    /// Resets the sequence values for all customers to the default value.
+    /// </summary>
+    /// <returns>
+    /// A tuple containing a boolean indicating whether the operation was successful 
+    /// and a <see cref="TransactionAbortedException"/> if an error occurs.
+    /// </returns>
+    /// <remarks>
+    /// This method updates all records in the <c>CustomerSequence</c> table, setting their 
+    /// <c>CurrentSequenceValue</c> to the default value of '000000'. The operation is performed 
+    /// within a transaction to ensure atomicity.
+    /// </remarks>
+    public (bool success, TransactionAbortedException exception) ResetAllSequences()
+    {
+        const string statement = 
+            """
+            UPDATE [dbo].[CustomerSequence]
+            SET CurrentSequenceValue = '000000'
+            """;
+
+        try
+        {
+            using TransactionScope transScope = new(TransactionScopeAsyncFlowOption.Enabled);
+            _cn.Execute(statement);
+            transScope.Complete();
+            return (true, null)!;
+        }
+        catch (TransactionAbortedException tae)
+        {
+            return (false, tae);
+        }
+    }
+
+    public void ResetSequence(int id)
+    {
+        const string statement = 
+            """
+            UPDATE [dbo].[CustomerSequence]
+              SET CurrentSequenceValue = '000000'
+            WHERE Id = @Id
+            """;
+
+        _cn.Execute(statement, new { Id = id });
+    }
+
+    /// <summary>
+    /// Sets the sequence value for the specified customer.
+    /// </summary>
+    /// <param name="customers">An instance of <see cref="Customers"/> representing the customer whose sequence value is to be updated.</param>
+    /// <returns>
+    /// A tuple containing a boolean indicating success and an <see cref="Exception"/> if an error occurs.
+    /// </returns>
+    /// <remarks>
+    /// This method updates the customer's sequence value in the database.
+    /// </remarks>
+    public (bool success, Exception exception) SetSequenceValue(Customers customers)
+    {
+        const string statement = """
+                                 UPDATE [dbo].[CustomerSequence]
+                                   SET CurrentSequenceValue = @CurrentSequenceValue
+                                 WHERE CustomerIdentifier = @CustomerIdentifier
+                                 """;
+
+        try
+        {
+            using TransactionScope transScope = new(TransactionScopeAsyncFlowOption.Enabled);
+            _cn.Execute(statement,
+                new
+                {
+                    CurrentSequenceValue = customers.CurrentSequenceValue,
+                    CustomerIdentifier = customers.CustomerIdentifier
+                });
+
+            transScope.Complete();
+
             return (true, null)!;
         }
         catch (TransactionAbortedException ex)
         {
             return (false, ex);
         }
+    }
+
+    /// <summary>
+    /// Retrieves the sequence information for a specific customer based on their identifier.
+    /// </summary>
+    /// <param name="customerIdentifier">The unique identifier of the customer.</param>
+    /// <returns>
+    /// An instance of <see cref="CustomerSequence"/> containing the sequence details for the specified customer,
+    /// or <c>null</c> if no matching record is found.
+    /// </returns>
+    /// <remarks>
+    /// This method executes a SQL query to fetch the sequence information for a customer
+    /// from the <c>CustomerSequence</c> table in the database.
+    /// </remarks>
+    public CustomerSequence? GetCustomerSequence(int customerIdentifier)
+    {
+        const string statement = """
+                                 SELECT Id
+                                       ,CustomerIdentifier
+                                       ,CurrentSequenceValue
+                                       ,SequencePreFix
+                                   FROM NextValueDatabase.dbo.CustomerSequence
+                                 WHERE CustomerIdentifier = @CustomerIdentifier
+                                 """;
+
+        return _cn.QueryFirstOrDefault<CustomerSequence>(statement, new { CustomerIdentifier = customerIdentifier });
     }
 
     /// <summary>

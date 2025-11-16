@@ -31,6 +31,7 @@ partial class Form1
         CompanyListBox = new ListBox();
         CurrentSequenceLabel = new Label();
         IncrementCurrentSequenceButton = new Button();
+        ResetCurrentButton = new Button();
         SuspendLayout();
         // 
         // CompanyListBox
@@ -61,11 +62,22 @@ partial class Form1
         IncrementCurrentSequenceButton.UseVisualStyleBackColor = true;
         IncrementCurrentSequenceButton.Click += IncrementCurrentSequenceButton_Click;
         // 
+        // ResetCurrentButton
+        // 
+        ResetCurrentButton.Location = new Point(35, 277);
+        ResetCurrentButton.Name = "ResetCurrentButton";
+        ResetCurrentButton.Size = new Size(317, 29);
+        ResetCurrentButton.TabIndex = 3;
+        ResetCurrentButton.Text = "Reset current sequence";
+        ResetCurrentButton.UseVisualStyleBackColor = true;
+        ResetCurrentButton.Click += ResetCurrentButton_Click;
+        // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(543, 291);
+        ClientSize = new Size(543, 339);
+        Controls.Add(ResetCurrentButton);
         Controls.Add(IncrementCurrentSequenceButton);
         Controls.Add(CurrentSequenceLabel);
         Controls.Add(CompanyListBox);
@@ -82,4 +94,5 @@ partial class Form1
     private ListBox CompanyListBox;
     private Label CurrentSequenceLabel;
     private Button IncrementCurrentSequenceButton;
+    private Button ResetCurrentButton;
 }

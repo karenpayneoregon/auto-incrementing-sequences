@@ -30,12 +30,31 @@ public partial class Form1 : Form
             DataSourceUpdateMode.OnPropertyChanged, "");
 
     }
+
+    /// <summary>
+    /// This method retrieves the currently selected customer from the binding list and updates
+    /// their sequence value using the <see cref="InvoiceOperations.SetSequence"/> method.
+    /// </summary>
     private void IncrementCurrentSequenceButton_Click(object sender, EventArgs e)
     {
         InvoiceOperations operations = new InvoiceOperations();
         Customers customer = customersBindingList[customersBindingSource.Position];
         operations.SetSequence(customer);
     }
+    /// <summary>
+    /// Resets the current sequence value for the selected customer and updates the UI accordingly.
+    /// </summary>
+    private void ResetCurrentButton_Click(object sender, EventArgs e)
+    {
+        InvoiceOperations operations = new InvoiceOperations();
+        Customers customer = customersBindingList[customersBindingSource.Position];
+        operations.ResetSequence(customer.Id);
 
-
+        var result = operations.GetSCustomers(customer.Id);
+        if (result is not null)
+        {
+            customer.CurrentSequenceValue = result.CurrentSequenceValue;
+        }
+        
+    }
 }
