@@ -15,13 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Experiments", "Experiments", "{4A06CD74-7830-4399-93D8-25B324990A2F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EF Core and Dapper", "EF Core and Dapper", "{4A06CD74-7830-4399-93D8-25B324990A2F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KP_ConsoleAppNet71", "KP_ConsoleAppNet71\KP_ConsoleAppNet71.csproj", "{1ADA7FD2-D3A2-491F-A1D2-C8489A956831}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dapper", "Dapper", "{D2E85A1D-C8A8-43E7-BF24-7CDE9BC62F24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperSampleApp", "DapperSampleApp\DapperSampleApp.csproj", "{EA71EAC7-1911-4DEC-9232-A1CBE0F6D6D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperSampleLibrary", "DapperSampleLibrary\DapperSampleLibrary.csproj", "{93E3A8EE-4A5D-48E2-9AC5-550CD309B49A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Class projects", "Class projects", "{7A4C05E0-4FF7-B8EC-2124-E708496D3B03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,13 +53,21 @@ Global
 		{EA71EAC7-1911-4DEC-9232-A1CBE0F6D6D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA71EAC7-1911-4DEC-9232-A1CBE0F6D6D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA71EAC7-1911-4DEC-9232-A1CBE0F6D6D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93E3A8EE-4A5D-48E2-9AC5-550CD309B49A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E3A8EE-4A5D-48E2-9AC5-550CD309B49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E3A8EE-4A5D-48E2-9AC5-550CD309B49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93E3A8EE-4A5D-48E2-9AC5-550CD309B49A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{0B2C67E4-961E-4CA0-B7FD-0BFF5674E988} = {4A06CD74-7830-4399-93D8-25B324990A2F}
+		{A55D387D-54B8-4ED4-8DC0-8A7249510C62} = {7A4C05E0-4FF7-B8EC-2124-E708496D3B03}
+		{A591EA03-631C-4F09-87F4-81DA8AC3340A} = {7A4C05E0-4FF7-B8EC-2124-E708496D3B03}
 		{1ADA7FD2-D3A2-491F-A1D2-C8489A956831} = {4A06CD74-7830-4399-93D8-25B324990A2F}
 		{EA71EAC7-1911-4DEC-9232-A1CBE0F6D6D3} = {D2E85A1D-C8A8-43E7-BF24-7CDE9BC62F24}
+		{93E3A8EE-4A5D-48E2-9AC5-550CD309B49A} = {D2E85A1D-C8A8-43E7-BF24-7CDE9BC62F24}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CA6743A-AA5C-4BA3-B5C1-A46F17C60D7C}

@@ -3,7 +3,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace DapperSampleApp.Models;
+namespace DapperSampleLibrary.Models;
 public class Customers : INotifyPropertyChanged
 {
     private int _customerIdentifier;
@@ -59,7 +59,7 @@ public class Customers : INotifyPropertyChanged
 
     public override string ToString() => CompanyName;
     public event PropertyChangedEventHandler? PropertyChanged;
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

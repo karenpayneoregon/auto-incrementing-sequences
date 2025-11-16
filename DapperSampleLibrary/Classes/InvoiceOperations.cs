@@ -1,13 +1,13 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 using System.Transactions;
 using Dapper;
-using DapperSampleApp.Models;
+using DapperSampleLibrary.Models;
+using Microsoft.Data.SqlClient;
 using SequenceLibrary;
 using static ConfigurationLibrary.Classes.ConfigurationHelper;
 
-namespace DapperSampleApp.Classes;
-internal class InvoiceOperations
+namespace DapperSampleLibrary.Classes;
+public class InvoiceOperations
 {
     private IDbConnection _cn = new SqlConnection(ConnectionString());
 
@@ -66,7 +66,7 @@ internal class InvoiceOperations
         }
     }
     
-    public Customers? GetSCustomers(int id)
+    public Customers? GetCustomers(int id)
     {
         const string statement = 
             """
@@ -198,13 +198,13 @@ internal class InvoiceOperations
     /// This method executes a SQL query to fetch customer data and their corresponding 
     /// sequence details by joining the Customers and CustomerSequence tables.
     /// </remarks>
-    public List<Customers> CustomersList()
+    public async Task<List<Customers>> CustomersList()
     {
         const string statement =
             """
             SELECT C.CustomerIdentifier,
                    C.CompanyName,
-            	   CS.Id,
+                   CS.Id,
                    CS.SequencePreFix,
                    CS.CurrentSequenceValue
             FROM dbo.Customers AS C
@@ -212,8 +212,9 @@ internal class InvoiceOperations
                     ON C.CustomerIdentifier = CS.CustomerIdentifier;
             """;
 
-        return _cn.Query<Customers>(statement).AsList();
+        return (await _cn.QueryAsync<Customers>(statement)).AsList();
     }
+
 
     /// <summary>
     /// Retrieves the sequence information for a specific customer based on their identifier.

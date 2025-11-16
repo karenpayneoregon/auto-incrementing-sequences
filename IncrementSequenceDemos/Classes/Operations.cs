@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Microsoft.EntityFrameworkCore;
 using Dapper;
 using IncrementSequenceDemos.Data;
 using IncrementSequenceDemos.Models;
@@ -259,6 +260,26 @@ public class Operations
         else
         {
             return false;
+        }
+    }
+    
+    /// <summary>
+    /// Resets the sequence value for a specific customer to its initial state.
+    /// </summary>
+    /// <param name="id">The unique identifier of the customer whose sequence is to be reset.</param>
+    /// <remarks>
+    /// This method updates the <see cref="CustomerSequence.CurrentSequenceValue"/> to "000000" 
+    /// for the customer with the specified <paramref name="id"/> in the database.
+    /// Changes are persisted to the database using <see cref="DbContext.SaveChanges()"/>.
+    /// </remarks>
+    public static void ResetSequence(int id)
+    {
+        using var context = new Context();
+        var customer = context.CustomerSequence.FirstOrDefault(x => x.Id == id);
+        if (customer is not null)
+        {
+            customer.CurrentSequenceValue = "000000";
+            context.SaveChanges();
         }
     }
 }
