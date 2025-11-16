@@ -13,7 +13,7 @@ namespace IncrementSequenceDemos
 
             //Operations.EntityFrameworkExample1();
             
-            Operations.ResetSequence(1);
+            //Operations.ResetSequence(1);
             var success = Operations.EntityFrameworkExample2(3);
             if (success)
             {
